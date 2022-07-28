@@ -1,3 +1,20 @@
+# 1.6.0 (2022-07-20)
+
+
+
+# 1.5.0 (2022-07-12)
+
+
+### Features
+
+* Delete all chats close [#483](https://github.com/wppconnect-team/wppconnect-server/issues/483) ([f47a253](https://github.com/wppconnect-team/wppconnect-server/commit/f47a253b1024778f9c3ed5d14a638689be464936))
+
+
+
+# 1.4.0 (2022-06-29)
+
+
+
 ## 1.3.4 (2022-06-20)
 
 

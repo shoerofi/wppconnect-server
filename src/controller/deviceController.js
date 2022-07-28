@@ -86,7 +86,9 @@ export async function getAllChatsWithMessages(req, res) {
     return res.status(500).json({ status: 'error', message: 'Error on get all chats whit messages' });
   }
 }
-
+/**
+ * Depreciado em favor de getMessages
+ */
 export async function getAllMessagesInChat(req, res) {
   try {
     let { phone } = req.params;
@@ -233,6 +235,18 @@ export async function deleteChat(req, res) {
     returnError(req, res, session, error);
   }
 }
+export async function deleteAllChats(req, res) {
+  try {
+    const chats = await req.client.getAllChats();
+    for (const chat of chats) {
+      await req.client.deleteChat(chat.chatId);
+    }
+    return res.status(200).json({ status: 'success' });
+  } catch (error) {
+    req.logger.error(error);
+    return res.status(500).json({ status: 'error', message: 'Error on delete all chats' });
+  }
+}
 
 export async function clearChat(req, res) {
   const { phone } = req.body;
@@ -254,11 +268,7 @@ export async function archiveChat(req, res) {
 
   try {
     let response;
-    if (isGroup) {
-      response = await req.client.archiveChat(`${phone}@g.us`, value);
-    } else {
-      response = await req.client.archiveChat(`${phone}@c.us`, value);
-    }
+    response = await req.client.archiveChat(`${phone}`, value);
     return res.status(201).json({ status: 'success', response: response });
   } catch (e) {
     req.logger.error(e);
@@ -266,16 +276,41 @@ export async function archiveChat(req, res) {
   }
 }
 
+export async function archiveAllChats(req, res) {
+  try {
+    const chats = await req.client.getAllChats();
+    for (const chat of chats) {
+      await req.client.archiveChat(`${chat.chatId}`, true);
+    }
+    return res.status(201).json({ status: 'success' });
+  } catch (e) {
+    req.logger.error(e);
+    return res.status(500).json({ status: 'error', message: 'Error on archive all chats' });
+  }
+}
+
 export async function deleteMessage(req, res) {
   const { phone, messageId } = req.body;
 
   try {
-    await req.client.deleteMessage(`${phone}@c.us`, [messageId]);
+    await req.client.deleteMessage(`${phone}`, [messageId]);
 
     return res.status(200).json({ status: 'success', response: { message: 'Message deleted' } });
   } catch (e) {
     req.logger.error(e);
     return res.status(500).json({ status: 'error', message: 'Error on delete message' });
+  }
+}
+export async function reactMessage(req, res) {
+  const { msgId, reaction } = req.body;
+
+  try {
+    await req.client.sendReactionToMessage(msgId, reaction);
+
+    return res.status(200).json({ status: 'success', response: { message: 'Reaction sended' } });
+  } catch (e) {
+    req.logger.error(e);
+    return res.status(500).json({ status: 'error', message: 'Error on send reaction to message' });
   }
 }
 
@@ -311,14 +346,10 @@ export async function forwardMessages(req, res) {
 }
 
 export async function markUnseenMessage(req, res) {
-  const { phone, isGroup = false } = req.body;
+  const { phone } = req.body;
 
   try {
-    if (isGroup) {
-      await req.client.markUnseenMessage(`${phone}@g.us`);
-    } else {
-      await req.client.markUnseenMessage(`${phone}@c.us`);
-    }
+    await req.client.markUnseenMessage(`${phone}`);
     return res.status(200).json({ status: 'success', response: { message: 'unseen checked' } });
   } catch (e) {
     req.logger.error(e);
@@ -544,6 +575,22 @@ export async function setTyping(req, res) {
   } catch (error) {
     req.logger.error(error);
     return res.status(500).json({ status: 'error', message: 'Error on set typing' });
+  }
+}
+
+export async function setRecording(req, res) {
+  const { phone, value = true, duration, isGroup = false } = req.body;
+  try {
+    let response;
+    for (const contato of contactToArray(phone, isGroup)) {
+      if (value) response = await req.client.startRecording(contato, duration);
+      else response = await req.client.stopRecoring(contato);
+    }
+
+    return res.status(200).json({ status: 'success', response: response });
+  } catch (error) {
+    req.logger.error(error);
+    return res.status(500).json({ status: 'error', message: 'Error on set recording' });
   }
 }
 
