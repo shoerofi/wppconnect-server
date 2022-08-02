@@ -1444,6 +1444,11 @@
   resolved "https://registry.npmjs.org/@sindresorhus/is/-/is-4.6.0.tgz"
   integrity sha512-t09vSN3MdfsyCHoFcTRCH/iUtG7OJ0CsjzB8cjAmKc/va/kIgeDI/TxsigdncE/4be734m0cvIYwNaV4i2XqAw==
 
+"@sindresorhus/is@^5.2.0":
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-5.3.0.tgz#0ec9264cf54a527671d990eb874e030b55b70dcc"
+  integrity sha512-CX6t4SYQ37lzxicAqsBtxA3OseeoVrh9cSJ5PFYam0GksYlupRfy1A+Q4aYD3zvcfECLc0zO2u+ZnR2UYKvCrw==
+
 "@szmarczak/http-timer@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@szmarczak/http-timer/-/http-timer-1.1.2.tgz#b1665e2c461a2cd92f4c1bbf50d5454de0d4b421"
@@ -1924,10 +1929,10 @@ available-typed-arrays@^1.0.5:
   resolved "https://registry.npmjs.org/available-typed-arrays/-/available-typed-arrays-1.0.5.tgz"
   integrity sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==
 
-aws-sdk@^2.1176.0:
-  version "2.1177.0"
-  resolved "https://registry.npmjs.org/aws-sdk/-/aws-sdk-2.1177.0.tgz"
-  integrity sha512-0Ui7hBofMom6F9N4em357NzsUt0pXDLuuUS1Ojf7Vu7S/LjVjB5zwmY7L4H5wuf5KDOjSmNX8/zG6QfGGc5X/w==
+aws-sdk@^2.1185.0:
+  version "2.1185.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.1185.0.tgz#157c6a900a9449cb36b37493337cae418e01210d"
+  integrity sha512-viFlYC6RAKOqBRM4gIB4rE80KMFNVvEkQpNmpd3PqCOemGPETDxCVHS0oqZ26qM278sZVHt+oAjPy5HmZasskg==
   dependencies:
     buffer "4.9.2"
     events "1.1.1"
@@ -2106,7 +2111,7 @@ browserslist@^4.20.2, browserslist@^4.21.2:
     node-releases "^2.0.6"
     update-browserslist-db "^1.0.4"
 
-bson@*, bson@^4.6.2, bson@^4.6.3:
+bson@*, bson@^4.6.5:
   version "4.6.5"
   resolved "https://registry.npmjs.org/bson/-/bson-4.6.5.tgz"
   integrity sha512-uqrgcjyOaZsHfz7ea8zLRCLe1u+QGUSzMZmvXqO24CDW7DWoW1qiN9folSwa7hSneTSgM2ykDIzF5kcQQ8cwNw==
@@ -3787,6 +3792,11 @@ form-data-encoder@1.7.1:
   resolved "https://registry.npmjs.org/form-data-encoder/-/form-data-encoder-1.7.1.tgz"
   integrity sha512-EFRDrsMm/kyqbTQocNvRXMLjc7Es2Vk+IQFx/YW7hkUH1eBl4J1fqiP34l74Yt0pFLCNpc06fkbVk00008mzjg==
 
+form-data-encoder@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/form-data-encoder/-/form-data-encoder-2.0.1.tgz#aec41860aca0275cb6026650d139c6701b0992c1"
+  integrity sha512-Oy+P9w5mnO4TWXVgUiQvggNKPI9/ummcSt5usuIV6HkaLKigwzPpoenhEqmGmx3zHqm6ZLJ+CR/99N8JLinaEw==
+
 form-data@4.0.0, form-data@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/form-data/-/form-data-4.0.0.tgz"
@@ -4150,7 +4160,26 @@ globby@^10.0.1:
     merge2 "^1.2.3"
     slash "^3.0.0"
 
-got@12.1.0, got@^12.1.0:
+got@12.2.0:
+  version "12.2.0"
+  resolved "https://registry.yarnpkg.com/got/-/got-12.2.0.tgz#0b5de8cd48d0a16cd44789fd5fdd071ba3ee1de5"
+  integrity sha512-A81ll5Z8wzeCmSdIlWVMDWFKDo82v2nmOaMZDQNHKGInNqDBcle+CSb6BBiZcn/Aiefz/kSpo520WBKi9QAO/A==
+  dependencies:
+    "@sindresorhus/is" "^5.2.0"
+    "@szmarczak/http-timer" "^5.0.1"
+    "@types/cacheable-request" "^6.0.2"
+    "@types/responselike" "^1.0.0"
+    cacheable-lookup "^6.0.4"
+    cacheable-request "^7.0.2"
+    decompress-response "^6.0.0"
+    form-data-encoder "^2.0.1"
+    get-stream "^6.0.1"
+    http2-wrapper "^2.1.10"
+    lowercase-keys "^3.0.0"
+    p-cancelable "^3.0.0"
+    responselike "^2.0.0"
+
+got@^12.1.0:
   version "12.1.0"
   resolved "https://registry.npmjs.org/got/-/got-12.1.0.tgz"
   integrity sha512-hBv2ty9QN2RdbJJMK3hesmSkFTjVIHyIDDbssCKnSmq62edGgImJWD10Eb1k77TiV1bxloxqcFAVK8+9pkhOig==
@@ -5400,26 +5429,26 @@ mongodb-connection-string-url@^2.5.2:
     "@types/whatwg-url" "^8.2.1"
     whatwg-url "^11.0.0"
 
-mongodb@4.7.0:
-  version "4.7.0"
-  resolved "https://registry.npmjs.org/mongodb/-/mongodb-4.7.0.tgz"
-  integrity sha512-HhVar6hsUeMAVlIbwQwWtV36iyjKd9qdhY+s4wcU8K6TOj4Q331iiMy+FoPuxEntDIijTYWivwFJkLv8q/ZgvA==
+mongodb@4.8.1:
+  version "4.8.1"
+  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-4.8.1.tgz#596de88ff4519128266d9254dbe5b781c4005796"
+  integrity sha512-/NyiM3Ox9AwP5zrfT9TXjRKDJbXlLaUDQ9Rg//2lbg8D2A8GXV0VidYYnA/gfdK6uwbnL4FnAflH7FbGw3TS7w==
   dependencies:
-    bson "^4.6.3"
+    bson "^4.6.5"
     denque "^2.0.1"
     mongodb-connection-string-url "^2.5.2"
     socks "^2.6.2"
   optionalDependencies:
     saslprep "^1.0.3"
 
-mongoose@^6.4.6:
-  version "6.4.6"
-  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-6.4.6.tgz#57bc7ae68de56abcc5e890284f2d10acac863aa2"
-  integrity sha512-ZAfNCWgXhwev6k/+rMzjHIJ/+wLkundQU/i+aUTqmCgGoYqc+B5e4EC4Y3E1XaLzNXiWID1/vocSM6zs5IAGvA==
+mongoose@^6.5.0:
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-6.5.0.tgz#5c71aa8d4027e50bfe8d29d6e955e378e010d174"
+  integrity sha512-swOX8ZEbmCeJaEs29B1j67StBIhuOccNNkipbVhsnLYYCDpNE7heM9W54MFGwN5es9tGGoxINHSzOhJ9kTOZGg==
   dependencies:
-    bson "^4.6.2"
+    bson "^4.6.5"
     kareem "2.4.1"
-    mongodb "4.7.0"
+    mongodb "4.8.1"
     mpath "0.9.0"
     mquery "4.0.3"
     ms "2.1.3"
@@ -6555,10 +6584,10 @@ regjsparser@^0.8.2:
   dependencies:
     jsesc "~0.5.0"
 
-release-it@^15.1.4:
-  version "15.1.4"
-  resolved "https://registry.yarnpkg.com/release-it/-/release-it-15.1.4.tgz#f9664862cea7cf55f17ff91cacd181cb36250a56"
-  integrity sha512-Sq6GlYfY83YQzzIy+VyUr+WpTzAz9QNcJbc2VE5LDvKC8C4mMe50clC0YJEci0QTZw6KykdBrYgQH+r/VmkQ+g==
+release-it@^15.2.0:
+  version "15.2.0"
+  resolved "https://registry.yarnpkg.com/release-it/-/release-it-15.2.0.tgz#06837d4682f913d820c873a7934fa05cd8120a7f"
+  integrity sha512-zVtk/+BSX941e9lR2dhWGQhOIVdr98Fifgel4xUnsJVycU0uTtalOUhjoZM2jyDgcD22idmuDVgvgOTl9IyJ/g==
   dependencies:
     "@iarna/toml" "2.2.5"
     "@octokit/rest" "19.0.3"
@@ -6569,7 +6598,7 @@ release-it@^15.1.4:
     form-data "4.0.0"
     git-url-parse "12.0.0"
     globby "13.1.2"
-    got "12.1.0"
+    got "12.2.0"
     inquirer "9.0.2"
     is-ci "3.0.1"
     lodash "4.17.21"
