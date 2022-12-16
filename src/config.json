@@ -30,7 +30,6 @@
     "logger": ["console", "file"]
   },
   "createOptions": {
-    "whatsappVersion": null,
     "browserArgs": [
       "--disable-web-security",
       "--no-sandbox",
