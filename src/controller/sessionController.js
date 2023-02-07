@@ -21,6 +21,7 @@ import fs from 'fs';
 import mime from 'mime-types';
 import { version } from '../../package.json';
 import QRCode from 'qrcode';
+import config from '../config.json';
 
 const SessionUtil = new CreateSessionUtil();
 
@@ -154,13 +155,21 @@ export async function startSession(req, res) {
 
 export async function closeSession(req, res) {
   const session = req.session;
+  const { clearSession = true } = req.body;
   try {
     if (clientsArray[session].status === null) {
       return await res.status(200).json({ status: true, message: 'Session successfully closed' });
     } else {
       clientsArray[session] = { status: null };
-      await req.client.close();
 
+      if (clearSession) {
+        let sessionFolder = `${config.customUserDataDir}/${session}`;
+        if (fs.existsSync(sessionFolder)) {
+          console.log('Deletando pasta: ' + sessionFolder);
+          fs.rmdirSync(sessionFolder, { recursive: true });
+        }
+      }
+      await req.client.close();
       req.io.emit('whatsapp-status', false);
       callWebHook(req.client, req, 'closesession', {
         message: `Session: ${session} disconnected`,
@@ -236,6 +245,7 @@ export async function downloadMediaByMessage(req, res) {
     return res.status(400).json({
       status: 'error',
       message: 'Decrypt file error',
+      error: e,
     });
   }
 }
@@ -264,7 +274,7 @@ export async function getMediaByMessage(req, res) {
     return res.status(200).json({ base64: buffer.toString('base64'), mimetype: message.mimetype });
   } catch (ex) {
     req.logger.error(ex);
-    return res.status(500).json({ status: 'error', message: 'The session is not active' });
+    return res.status(500).json({ status: 'error', message: 'The session is not active', error: ex });
   }
 }
 
@@ -285,7 +295,7 @@ export async function getSessionState(req, res) {
       });
   } catch (ex) {
     req.logger.error(ex);
-    return res.status(500).json({ status: 'error', message: 'The session is not active' });
+    return res.status(500).json({ status: 'error', message: 'The session is not active', error: ex });
   }
 }
 
@@ -305,7 +315,7 @@ export async function getQrCode(req, res) {
     }
   } catch (ex) {
     req.logger.error(ex);
-    return res.status(500).json({ status: 'error', message: 'Error retrieving QRCode' });
+    return res.status(500).json({ status: 'error', message: 'Error retrieving QRCode', error: ex });
   }
 }
 
@@ -314,7 +324,7 @@ export async function killServiceWorker(req, res) {
     return res.status(200).json({ status: 'success', response: req.client.killServiceWorker() });
   } catch (ex) {
     req.logger.error(ex);
-    return res.status(500).json({ status: 'error', message: 'The session is not active' });
+    return res.status(500).json({ status: 'error', message: 'The session is not active', error: ex });
   }
 }
 
@@ -323,7 +333,7 @@ export async function restartService(req, res) {
     return res.status(200).json({ status: 'success', response: req.client.restartService() });
   } catch (ex) {
     req.logger.error(ex);
-    return res.status(500).json({ status: 'error', response: { message: 'The session is not active' } });
+    return res.status(500).json({ status: 'error', response: { message: 'The session is not active', error: ex } });
   }
 }
 
@@ -348,6 +358,6 @@ export async function subscribePresence(req, res) {
 
     return await res.status(200).json({ status: 'success', response: { message: 'Subscribe presence executed' } });
   } catch (error) {
-    return await res.status(500).json({ status: 'error', message: 'Error on subscribe presence', error });
+    return await res.status(500).json({ status: 'error', message: 'Error on subscribe presence', error: error });
   }
 }
