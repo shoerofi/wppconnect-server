@@ -55,25 +55,29 @@ export default class chatWootClient {
     //assina o evento do qrcode
     eventEmitter.on(`qrcode-${session}`, (qrCode, urlCode, client) => {
       setTimeout(async () => {
-        this.sendMessage(client, {
-          sender: this.sender,
-          chatId: this.mobile_number + '@c.us',
-          type: 'image',
-          timestamp: 'qrcode',
-          mimetype: 'image/png',
-          caption: 'leia o qrCode',
-          qrCode: qrCode.replace('data:image/png;base64,', ''),
-        });
+        if (config?.chatwoot?.sendQrCode !== false) {
+          this.sendMessage(client, {
+            sender: this.sender,
+            chatId: this.mobile_number + '@c.us',
+            type: 'image',
+            timestamp: 'qrcode',
+            mimetype: 'image/png',
+            caption: 'leia o qrCode',
+            qrCode: qrCode.replace('data:image/png;base64,', ''),
+          });
+        }
       }, 1000);
     });
 
     //assiona o evento do status
     eventEmitter.on(`status-${session}`, (client, status) => {
-      this.sendMessage(client, {
-        sender: this.sender,
-        chatId: this.mobile_number + '@c.us',
-        body: `wppconnect status: ${status} `,
-      });
+      if (config?.chatwoot?.sendStatus !== false) {
+        this.sendMessage(client, {
+          sender: this.sender,
+          chatId: this.mobile_number + '@c.us',
+          body: `wppconnect status: ${status} `,
+        });
+      }
     });
 
     //assina o evento de mensagem
@@ -201,10 +205,10 @@ export default class chatWootClient {
   async findConversation(contact: any) {
     try {
       const { data } = await this.api.get(
-        `api/v1/accounts/${this.account_id}/conversations?inbox_id=${this.inbox_id}&status=all`
+        `api/v1/accounts/${this.account_id}/contacts/${contact.id}/conversations`
       );
-      return data.data.payload.find(
-        (e: any) => e.meta.sender.id == contact.id && e.status != 'resolved'
+      return data.payload.find(
+        (e: any) => e.inbox_id == this.inbox_id && e.status != 'resolved'
       );
     } catch (e) {
       console.log(e);
